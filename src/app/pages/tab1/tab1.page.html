@@ -1,0 +1,21 @@
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="dark">
+    <ion-title class="ion-text-center">
+      PENDIENTES
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark">
+  <ion-list color="dark">
+    <ion-item *ngFor="let lista of todoSvc.listas" detail color="dark">
+      <ion-label>{{ lista.titulo }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarLista()" color="success">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

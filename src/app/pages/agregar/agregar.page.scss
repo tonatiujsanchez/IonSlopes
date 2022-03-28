@@ -1,0 +1,17 @@
+ion-item.input-tarea{
+    --background: #1e2023;
+    --color: white;
+    --border-radius: 6px;
+}
+
+.item-label-floating ion-label.label-floating{
+    opacity: 0.2;
+}
+.item-label-floating.item-has-focus ion-label.label-floating{
+    color: #2fdf75;
+    opacity: 1;
+}
+
+.btn-agregar{
+    margin-bottom: 1rem;
+}

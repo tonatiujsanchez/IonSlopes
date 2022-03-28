@@ -1,0 +1,40 @@
+<ion-header class="ion-no-border" mode="ios">
+  <ion-toolbar color="dark">
+
+      <ion-buttons slot="start">
+        <ion-back-button color="success" defaultHref="/" text="Atras"></ion-back-button>
+      </ion-buttons>
+      
+
+    <ion-title>{{ lista?.titulo }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark" class="ion-padding">
+
+  <ion-list color="dark" class="list-input">
+    <ion-item class="input-tarea">
+      <ion-label position="floating">Nueva Tarea</ion-label>
+      <ion-input type="text" [(ngModel)]="nombreItem" (keyup.enter)="agregarItem()"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" color="success" class="btn-agregar" (click)="agregarItem()">Agregar</ion-button>  
+
+  <ion-list *ngIf="lista">
+
+    <ion-list-header color="dark">
+      <ion-label>Tareas por hacer</ion-label>
+    </ion-list-header>
+
+    <ion-item color="dark" *ngFor="let item of lista.items" class="animated fadeInDown">
+      <ion-checkbox 
+        color="success" 
+        slot="start" 
+        [(ngModel)]="item.completado"
+        (ionChange)="checkToggle(item)" ></ion-checkbox>
+      <ion-label>{{ item.desc }}</ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
