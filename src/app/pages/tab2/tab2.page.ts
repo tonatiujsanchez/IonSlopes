@@ -22,6 +22,7 @@ export class Tab2Page {
 
   ionViewDidEnter(){
     this.disabledReorder = true;
+    this.todoSvc.activeReorder.emit(this.disabledReorder)
   }
 
   editarLista( lista: Lista ){
@@ -30,7 +31,7 @@ export class Tab2Page {
 
   toggleReorder(){
     this.disabledReorder = !this.disabledReorder;
-    this.todoSvc.activeReorder.emit()
+    this.todoSvc.activeReorder.emit(this.disabledReorder)
   }
 
 }

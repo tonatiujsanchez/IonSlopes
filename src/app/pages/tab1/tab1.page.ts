@@ -26,6 +26,8 @@ export class Tab1Page {
 
     ionViewDidEnter(){
       this.disabledReorder = true;
+      this.todoSvc.activeReorder.emit(this.disabledReorder)
+
     }
 
     agregarLista(){
@@ -38,7 +40,7 @@ export class Tab1Page {
   
     toggleReorder(){
       this.disabledReorder = !this.disabledReorder;
-      this.todoSvc.activeReorder.emit()
+      this.todoSvc.activeReorder.emit(this.disabledReorder)
     }
 
 }

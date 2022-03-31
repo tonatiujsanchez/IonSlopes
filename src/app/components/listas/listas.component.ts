@@ -31,7 +31,9 @@ export class ListasComponent implements OnInit {
     )
 
     this.todoSvc.activeReorder.subscribe(
-      () => { this.toggleReorder() }
+      (toggleReorder) => { 
+        this.disabledReorder = toggleReorder;
+       }
     )
 
   }
@@ -70,8 +72,8 @@ export class ListasComponent implements OnInit {
   }
 
 
-  toggleReorder(){
-    this.disabledReorder = !this.disabledReorder;    
-  }
+  // toggleReorder(){
+  //   this.disabledReorder = !this.disabledReorder;    
+  // }
 
 }
