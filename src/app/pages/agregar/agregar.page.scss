@@ -15,3 +15,13 @@ ion-item.input-tarea{
 .btn-agregar{
     margin-bottom: 1rem;
 }
+
+
+// ion-reorder
+.activeReorder{
+    transform: scaleX(-1);
+}
+
+.visibility{
+    opacity: 0;
+}

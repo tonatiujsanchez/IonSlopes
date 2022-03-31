@@ -1,40 +1,90 @@
 <ion-header class="ion-no-border" mode="ios">
-  <ion-toolbar color="dark">
+    <ion-toolbar color="dark">
 
-      <ion-buttons slot="start">
-        <ion-back-button color="success" defaultHref="/" text="Atras"></ion-back-button>
-      </ion-buttons>
-      
+        <ion-buttons slot="start">
+            <ion-back-button color="success" defaultHref="/" text="Atras"></ion-back-button>
+        </ion-buttons>
 
-    <ion-title>{{ lista?.titulo }}</ion-title>
-  </ion-toolbar>
+
+        <ion-title>{{ lista?.titulo }}</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark" class="ion-padding">
 
-  <ion-list color="dark" class="list-input">
-    <ion-item class="input-tarea">
-      <ion-label position="floating">Nueva Tarea</ion-label>
-      <ion-input type="text" [(ngModel)]="nombreItem" (keyup.enter)="agregarItem()"></ion-input>
-    </ion-item>
-  </ion-list>
-  <ion-button expand="block" color="success" class="btn-agregar" (click)="agregarItem()">Agregar</ion-button>  
-
-  <ion-list *ngIf="lista">
-
-    <ion-list-header color="dark">
-      <ion-label>Tareas por hacer</ion-label>
-    </ion-list-header>
-
-    <ion-item color="dark" *ngFor="let item of lista.items" class="animated fadeInDown">
-      <ion-checkbox 
+    <ion-list color="dark" class="list-input">
+        <ion-item class="input-tarea">
+            <ion-label position="floating">{{ idxEditando !== null ? 'Editando Tarea...' : 'Nueva Tarea' }}</ion-label>
+            <ion-input 
+                #inputAdd
+                type="text" 
+                [value]="nombreItem"
+                [(ngModel)]="nombreItem" 
+                (keyup.enter)="agregarItem()"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-button 
+        expand="block" 
         color="success" 
-        slot="start" 
-        [(ngModel)]="item.completado"
-        (ionChange)="checkToggle(item)" ></ion-checkbox>
-      <ion-label>{{ item.desc }}</ion-label>
-    </ion-item>
+        class="btn-agregar" 
+        (click)="agregarItem()">
+            {{ idxEditando !== null ? 'Editar': 'Agregar'}}
+    </ion-button>
 
-  </ion-list>
+
+
+
+    <ion-list #listTareas *ngIf="lista && lista.items.length > 0">
+        <ion-list-header color="dark">
+            <ion-label class="animated fadeInDown">Tareas por hacer</ion-label>
+            <ion-button 
+                *ngIf="lista.items.length >= 2"
+                (click)="toggleReorder()"
+                color="success"
+                shape="round">
+                <ion-icon
+                    [name]=" disabledReorder ? 'toggle-outline' : 'toggle'"
+                    [ngClass]="{'activeReorder': disabledReorder}">
+                </ion-icon>
+        </ion-button>
+  
+        </ion-list-header>
+
+        <ion-reorder-group [disabled]="disabledReorder" (ionItemReorder)="doReorder($event)">
+            <ion-reorder *ngFor="let item of lista.items; let idx = index">    
+
+                <ion-item-sliding [ngClass]="{ 'animated': disabledReorder}" class="fadeInDown">
+        
+                    <ion-item-options side="start">
+                        <ion-item-option (click)="editItem(idx)" color="primary">
+                            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+                        </ion-item-option>
+                    </ion-item-options>
+        
+                    <ion-item color="dark">
+                            <ion-checkbox 
+                                color="success" 
+                                slot="start" 
+                                [(ngModel)]="item.completado"
+                                (ionChange)="checkToggle()">
+                            </ion-checkbox>
+                            <ion-label>{{ item.desc }}</ion-label>
+                     
+                            <ion-icon slot="end" color="success" name="reorder-two-sharp" [ngClass]="{'visibility': disabledReorder}" ></ion-icon>
+                    </ion-item>
+                    
+                    <ion-item-options side="end">
+                        <ion-item-option (click)="deleteItem(idx)" color="danger">
+                            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                        </ion-item-option>
+                    </ion-item-options>
+
+                    
+                </ion-item-sliding>
+                
+            </ion-reorder>
+        </ion-reorder-group>
+
+    </ion-list>
 
 </ion-content>

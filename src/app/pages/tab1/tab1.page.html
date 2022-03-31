@@ -1,17 +1,28 @@
 <ion-header class="ion-no-border" mode="ios">
   <ion-toolbar color="dark">
-    <ion-title class="ion-text-center">
+    <ion-title class="ion-text-center" color="success">
       PENDIENTES
     </ion-title>
+
+
+    <ion-buttons *ngIf="showBtnReorder" slot="end">
+      <ion-button 
+          (click)="toggleReorder()"
+          color="success"
+          shape="round">
+          <ion-icon
+              [name]=" disabledReorder ? 'toggle-outline' : 'toggle'"
+              [ngClass]="{'activeReorder': disabledReorder}">
+          </ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark">
-  <ion-list color="dark">
-    <ion-item *ngFor="let lista of todoSvc.listas" detail color="dark">
-      <ion-label>{{ lista.titulo }}</ion-label>
-    </ion-item>
-  </ion-list>
+
+  <app-listas [completadas]="false" (editLista)="editarLista($event)"></app-listas>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="agregarLista()" color="success">

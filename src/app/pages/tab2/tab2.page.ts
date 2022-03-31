@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TodosService } from '../../services/todos.service';
+import { Lista } from '../../models/lista.model';
 
 @Component({
   selector: 'app-tab2',
@@ -8,6 +9,28 @@ import { TodosService } from '../../services/todos.service';
 })
 export class Tab2Page {
 
+  disabledReorder: boolean = true;
+
+  get showBtnReorder(){
+
+    const listasCompletadas = this.todoSvc.listas.filter( l => l.terminada )
+
+    return listasCompletadas.length >= 2;
+  }
+
   constructor( private todoSvc: TodosService ) {}
+
+  ionViewDidEnter(){
+    this.disabledReorder = true;
+  }
+
+  editarLista( lista: Lista ){
+    this.todoSvc.mostrarAlerta( lista );
+  }
+
+  toggleReorder(){
+    this.disabledReorder = !this.disabledReorder;
+    this.todoSvc.activeReorder.emit()
+  }
 
 }
